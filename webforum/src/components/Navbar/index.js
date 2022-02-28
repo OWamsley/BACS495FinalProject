@@ -10,18 +10,18 @@ const Navbar = () => {
           </NavLink>
           <Bars/>
           <NavMenu>
-              <NavLink to="/about" activeStyle>
+              <NavLink to="/about" >
                   About
               </NavLink>
-              <NavLink to="/about" activeStyle>
+              <NavLink to="/about" >
                   About
               </NavLink>
-              <NavLink to="/about" activeStyle>
-                  About
+              <NavLink to="/signup" >
+                  Sign Up
               </NavLink>
           </NavMenu>
           <NavBtn>
-              <NavBtnLink to="/signin">Sign In</NavBtnLink>
+              <NavBtnLink to="/login">Log In</NavBtnLink>
           </NavBtn>
       </Nav>
   </>);
