@@ -3,13 +3,15 @@ import './App.css';
 import Navbar from './components/Navbar/index';
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Signup from './Signup';
+import Login from './Login';
+import Dashboard from './Dashboard';
 
 function App() {
   return (
     <Router>
       <Routes>
         
-          <Route path="/" element={<DashBoard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
         
@@ -18,19 +20,11 @@ function App() {
   );
 }
 
-function DashBoard(){
-  return<>
-  <Navbar/>
-  <h2>Dashboard</h2>
-  </>;
-}
 
-function Login(){
-  return <>
-  <Navbar/>
-  <h2>Login</h2>
-  </>;
-}
+
+
+
+
 
 
 export default App;

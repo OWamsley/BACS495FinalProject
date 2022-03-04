@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 
 
-export default class Signup extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +34,7 @@ export default class Signup extends Component {
         return (<>
             <Navbar />
             <Container>
-                <BoxOne><h2>Create an Account</h2></BoxOne>
+                <BoxOne><h2>Log in</h2></BoxOne>
                 
                 <Form onSubmit={this.handleSubmit}>
                     <BoxTwo>
