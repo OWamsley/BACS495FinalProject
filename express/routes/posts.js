@@ -10,7 +10,21 @@ var posts = [
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  var db = req.app.locals.db;
+  var posts = db.collection("posts").find();
   res.json(posts);
 });
+
+router.post('/', function(req, res, next){
+  const user = {
+    "title": req.body.title,
+    "body": req.body.body
+  }
+
+  var db = req.app.locals.db;
+  db.collection("posts").insertOne(user);
+  res.send("Usernserted");
+
+})
 
 module.exports = router;

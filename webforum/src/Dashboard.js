@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
   }
 
   callAPI() {
-    fetch("http://localhost:3001/posts", {
+    fetch(process.env.REACT_APP_API_URL_POSTS, {
       method: 'GET',
     })
       .then(res=> res.json())
