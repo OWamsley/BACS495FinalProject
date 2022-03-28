@@ -66,8 +66,6 @@ const Container = styled.div`
     justify-content: center;
     height:300px;
     align-items: center;
-    
-    
 `
 
 const BoxOne = styled.div`
