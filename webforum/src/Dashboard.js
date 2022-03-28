@@ -10,6 +10,7 @@ export default class Dashboard extends Component {
     super(props);
     this.state = { apiResponse: "" };
   }
+  
   render() {
     let postingList = new Array();
     console.log(this.state.apiResponse);
@@ -40,6 +41,7 @@ export default class Dashboard extends Component {
   }
 
   callAPI() {
+    console.log("CAll api function");
     fetch(process.env.REACT_APP_API_URL_POSTS, {
       method: 'GET',
     })
