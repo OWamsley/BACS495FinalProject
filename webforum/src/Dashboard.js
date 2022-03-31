@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Navbar from './components/Navbar/index';
 import Posting from './components/Posting/index';
 
@@ -20,7 +19,7 @@ export default class Dashboard extends Component {
       console.log("asdff");
     }
     const listed = postingList.map(posting => (
-      <Posting title={posting.title} body={posting.body} />
+      <Posting title={posting.title} body={posting.body} key={posting._id} />
     
     ));
     return (

@@ -27,3 +27,24 @@ export const Body = styled.div`
     
 
 `
+
+export const CommentBody = styled.div`
+    display: flex;
+    background-color: #fafafa
+    flex-direction: column;
+`
+
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+`
+export const Input = styled.textarea`
+    display: flex;
+    margin-bottom: .75rem;
+    width: 90%;
+`
+
+export const Submit = styled.input`
+    margin-bottom: .6rem;
+`
+

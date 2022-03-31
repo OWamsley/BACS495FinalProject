@@ -13,15 +13,21 @@ router.get('/', function(req, res, next) {
     })
 });
 
+router.patch('/' ,function(req, res, next){
+  var db = req.app.locals.db;
+  db.collections("posts").updateOne({ _id: req.body._id }, 
+    { $push: {"comments": {"comment": req.body.comment, "likes":0, "dislikes": 0}}});
+})
+
 router.post('/', function(req, res, next){
   const post = {
     "title": req.body.title,
-    "body": req.body.body
+    "body": req.body.body,
+    "comments":[],
   }
 
   var db = req.app.locals.db;
   db.collection("posts").insertOne(post);
-  res.send("User inserted");
 
 })
 

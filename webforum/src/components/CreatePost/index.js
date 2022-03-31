@@ -6,9 +6,12 @@ export default class CreatePostElements extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: props.title,
-            body: props.body,
+            title: '',
+            body: '',
         };
+        this.handleChange=this.handleChange.bind(this);
+        this.callAPI = this.callAPI.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
  
     callAPI() {
@@ -18,25 +21,21 @@ export default class CreatePostElements extends Component {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({title: this.props.title, body: this.props.body}),
+          body: JSON.stringify({title: this.state.title, body: this.state.body}),
         })
           .then(function(res){console.log(res)})
           .catch(function(res){console.log(res)});
       }
 
     handleChange = (event) => {
+        event.preventDefault();
         this.setState({
             [event.target.name]: event.target.value,
         });
-        
-        
     }
 
     handleSubmit = (event) => {
-        
         this.callAPI();
-
-
     }
 
 
