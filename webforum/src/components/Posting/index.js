@@ -7,8 +7,10 @@ export default class Posting extends Component {
         this.state = {
             title: props.title,
             body: props.body,
-            id: props.id_,
+            id: props.id,
             comment: '',
+            comments: [],
+            key: props.id,
         };
         
         this.handleChange=this.handleChange.bind(this);
@@ -27,18 +29,36 @@ export default class Posting extends Component {
         this.callAPI();
     }
     callAPI(){
+        //add comment
+    }
 
+    componentDidMount() {
+        this.getComments();
+      }
+    getComments(){
+        console.log("Loading Comments...");
+        fetch((process.env.REACT_APP_API_URL_POSTS + '/comments'), {
+            method: 'GET',
+            body: {"id": this.state.key},
+          })
+            .then(res=> res.json())
+            .then(res => this.setState({ comments: res }))
+            .catch(err => err);
+        
     }
 
     render() {
+        console.log("key : " + this.state.key);
         return (
             <Container>
                 <User><b>Username</b></User>
                 <Title>
                     <h3>{this.state.title}</h3>
+                    
                 </Title>
                 <Body>
                     {this.state.body}
+                    
                 </Body>
                 <CommentBody>
                     <Form onSubmit={this.handleSubmit}>

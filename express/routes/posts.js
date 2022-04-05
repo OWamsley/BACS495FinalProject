@@ -13,22 +13,50 @@ router.get('/', function(req, res, next) {
     })
 });
 
-router.patch('/' ,function(req, res, next){
+router.get('/comments', async function(req, res, next) {
   var db = req.app.locals.db;
-  db.collections("posts").updateOne({ _id: req.body._id }, 
-    { $push: {"comments": {"comment": req.body.comment, "likes":0, "dislikes": 0}}});
-})
+  var post = await db.collection("posts").findOne({ id: req.body.id }, { comments: 1, _id: 0})
+  var comments = post.comments;
+  
+  res.json(comments);
+  
+});
 
-router.post('/', function(req, res, next){
+router.patch('/', async function(req, res, next){
+  //create new comment
+  const query = { id: req.body.id }
+  var db = req.app.locals.db;
+  var comments = await db.collection("posts").findOne(query, { commentCount: 1, _id: 0});
+  var comment = { "commentTitle": req.body.commentTitle, 
+  "commentBody": req.body.commentBody,
+  "id": comments.commentCount,
+  "likes" : 0,
+  "dislikes": 0,};
+  
+  await db.collection("posts").updateOne(query, {$push: { comments: comment }})
+  await db.collection("posts").updateOne(query, {$inc: { commentCount: 1 }})
+  
+  res.send();
+});
+
+
+router.post('/', async function(req, res, next){
+  var db = req.app.locals.db;
+  var count = await db.collection("postCount").findOne({ counter: "postCount" }, {count: 1, _id: 0});
+  
+  await db.collection("postCount").updateOne({ counter: "postCount" }, { $inc: {count: 1}});
+
+  console.log(count.count);
   const post = {
     "title": req.body.title,
     "body": req.body.body,
     "comments":[],
+    "id": count.count,
+    "commentCount": 0,
   }
 
-  var db = req.app.locals.db;
   db.collection("posts").insertOne(post);
-
+  res.json();
 })
 
 module.exports = router;

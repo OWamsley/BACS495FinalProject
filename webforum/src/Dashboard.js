@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './components/Navbar/index';
 import Posting from './components/Posting/index';
+import Comment from './components/Comment/index';
 
 
 
@@ -12,16 +13,16 @@ export default class Dashboard extends Component {
   
   render() {
     let postingList = new Array();
-    console.log(this.state.apiResponse);
     for (var i = 0; i < this.state.apiResponse.length; i++) {
       var obj = this.state.apiResponse[i];
       postingList.push(obj);
-      console.log("asdff");
+      
     }
+  
     const listed = postingList.map(posting => (
-      <Posting title={posting.title} body={posting.body} key={posting._id} />
-    
+      <Posting title={posting.title} body={posting.body} id={posting.id + 0} />
     ));
+
     return (
       <>
         <Navbar />
