@@ -16,11 +16,10 @@ export default class Dashboard extends Component {
     for (var i = 0; i < this.state.apiResponse.length; i++) {
       var obj = this.state.apiResponse[i];
       postingList.push(obj);
-      
     }
   
     const listed = postingList.map(posting => (
-      <Posting title={posting.title} body={posting.body} id={posting.id + 0} />
+      <Posting comments={posting.comments} title={posting.title} body={posting.body} id={posting.id} />
     ));
 
     return (

@@ -8,7 +8,6 @@ router.get('/', function(req, res, next) {
   db.collection("posts").find({}).toArray()
     .then(function(posts){
 
-      console.log(posts); 
       res.json(posts);
     })
 });
@@ -17,7 +16,7 @@ router.get('/comments', async function(req, res, next) {
   var db = req.app.locals.db;
   var post = await db.collection("posts").findOne({ id: req.body.id }, { comments: 1, _id: 0})
   var comments = post.comments;
-  
+  console.log("Retrieving Comments for key: "  + req.body.id);
   res.json(comments);
   
 });

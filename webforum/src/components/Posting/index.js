@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Comment from '../Comment/index';
 import { Container, Title, Body, User, CommentBody, Form, Input, Submit } from './PostingElements';
 
 export default class Posting extends Component {
@@ -9,7 +10,7 @@ export default class Posting extends Component {
             body: props.body,
             id: props.id,
             comment: '',
-            comments: [],
+            comments: props.comments,
             key: props.id,
         };
         
@@ -33,22 +34,15 @@ export default class Posting extends Component {
     }
 
     componentDidMount() {
-        this.getComments();
-      }
-    getComments(){
-        console.log("Loading Comments...");
-        fetch((process.env.REACT_APP_API_URL_POSTS + '/comments'), {
-            method: 'GET',
-            body: {"id": this.state.key},
-          })
-            .then(res=> res.json())
-            .then(res => this.setState({ comments: res }))
-            .catch(err => err);
         
-    }
+      }
 
     render() {
+        const listedComments = this.state.comments.map(comment => (
+            <Comment body={comment.commentBody} likes={comment.likes} dislikes={comment.dislikes}/>
+        ));
         console.log("key : " + this.state.key);
+        console.log(this.state.comments);
         return (
             <Container>
                 <User><b>Username</b></User>
@@ -60,6 +54,8 @@ export default class Posting extends Component {
                     {this.state.body}
                     
                 </Body>
+                {listedComments}
+
                 <CommentBody>
                     <Form onSubmit={this.handleSubmit}>
                         
