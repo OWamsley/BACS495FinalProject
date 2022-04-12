@@ -24,6 +24,8 @@ router.get('/comments', async function(req, res, next) {
 router.patch('/', async function(req, res, next){
   //create new comment
   const query = { id: req.body.id }
+  console.log("body: " + req.body.commentBody);
+  console.log("id: " + req.body.id);
   var db = req.app.locals.db;
   var comments = await db.collection("posts").findOne(query, { commentCount: 1, _id: 0});
   var comment = { "commentTitle": req.body.commentTitle, 

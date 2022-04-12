@@ -29,8 +29,18 @@ export default class Posting extends Component {
     handleSubmit = (event) => {
         this.callAPI();
     }
+
     callAPI(){
-        //add comment
+        fetch(process.env.REACT_APP_API_URL_POSTS, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+            body: JSON.stringify({
+                id: this.state.key,
+                commentBody: this.state.comment,
+            })
+        })
     }
 
     componentDidMount() {
@@ -41,25 +51,26 @@ export default class Posting extends Component {
         const listedComments = this.state.comments.map(comment => (
             <Comment body={comment.commentBody} likes={comment.likes} dislikes={comment.dislikes}/>
         ));
-        console.log("key : " + this.state.key);
-        console.log(this.state.comments);
+        
         return (
             <Container>
                 <User><b>Username</b></User>
                 <Title>
                     <h3>{this.state.title}</h3>
+                   
                     
                 </Title>
                 <Body>
                     {this.state.body}
                     
                 </Body>
+                <div>
                 {listedComments}
-
+                </div>
                 <CommentBody>
                     <Form onSubmit={this.handleSubmit}>
-                        
-                        <Input id="comment" type="text" name="comment" rows="8" onChange={this.handleChange} />
+                        <h4>Add a Comment</h4>
+                        <Input id="comment" type="text" rows="6" name="comment" onChange={this.handleChange} />
                         <div>
                             <Submit type='submit' value="Submit" />
                         </div>

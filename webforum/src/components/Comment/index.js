@@ -30,7 +30,8 @@ export default class Comment extends Component {
                 downArrow: downStandard,
                 up: true,
                 upArrow: upSelected,
-            })
+            });
+            
         }
     }
 
