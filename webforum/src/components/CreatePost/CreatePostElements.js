@@ -20,5 +20,9 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
 `
+export const Dropdown = styled.select`
+
+`
+
 
 

@@ -9,12 +9,20 @@ const Navbar = () => {
             <h1>Logo</h1>
           </NavLink>
           <Bars/>
+          <NavBtn>
+              <NavBtnLink to="/">Home</NavBtnLink>
+          </NavBtn>
           <NavMenu>
               
-              <NavLink to="/signup" >
-                  Sign Up
+              
+              <NavLink to="/createpost">
+                  Create a Post
               </NavLink>
+              
           </NavMenu>
+          <NavBtn>
+              <NavBtnLink to="/signup">Sign Up</NavBtnLink>
+          </NavBtn>
           <NavBtn>
               <NavBtnLink to="/login">Log In</NavBtnLink>
           </NavBtn>

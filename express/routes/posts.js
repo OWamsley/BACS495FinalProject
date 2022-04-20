@@ -50,6 +50,7 @@ router.post('/', async function(req, res, next){
   console.log(count.count);
   const post = {
     "title": req.body.title,
+    "category": req.body.category,
     "body": req.body.body,
     "comments":[],
     "id": count.count,
