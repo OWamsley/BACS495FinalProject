@@ -10,32 +10,71 @@ export default class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: '',
+            password: -1,
             loggedOn: false,
+            apiResponse: '',
+            errorMessage: ''
         };
+        this.processResult = this.processResult.bind(this);
     }
 
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-        })
+        });
 
+    }
+
+    logInUser = (name) => {
+        this.props.logInUser(name)
     }
 
     handleSubmit = (event) => {
-        //needs to actually do more later on 
-        this.setState({ loggedOn: true })
+        event.preventDefault();
+        const numID = parseInt(this.state.password);
+        fetch(process.env.REACT_APP_API_URL_USERS + '/' + this.state.password, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: this.state.username,
+                id: numID
+            })
+        })
+            .then(res => res.json())
+            .then(res => this.processResult(res))
+            .then(res => console.log("res" + res))
+            .then(res => this.setState({
+                apiResponse: res
+            }))
+            .then(res => console.log("state " + this.setState.apiResponse))
+            
+        
+            
+    }
+
+    processResult(res){
+        if (res == null) {
+            this.setState({
+                errorMessage: "Incorrect Username or ID"
+            })
+        }
+        else {
+            this.logInUser(res.name);
+        }
     }
 
     render() {
-        if (this.state.loggedOn) {
+        if (this.props.loggedin) {
             return <Navigate to="/" />
         }
         return (<>
-            <Navbar />
+            <Navbar username={this.state.username} loggedin={this.state.loggedin}/>
             <Container>
                 <BoxOne><h2>Log in</h2></BoxOne>
-                
+                <BoxTwo>{this.state.errorMessage}</BoxTwo>
+
                 <Form onSubmit={this.handleSubmit}>
                     <BoxTwo>
                         <Label >Username: </Label>
@@ -43,16 +82,16 @@ export default class Login extends Component {
                         {this.state.errorMessage && <span className="error">Username is required</span>}
                     </BoxTwo>
                     <BoxTwo>
-                        <Label >Password: </Label>
-                        <Input id="password" type="password" name="password" onChange={this.handleChange} />
+                        <Label >ID: </Label>
+                        <Input id="password" type="number" name="password" onChange={this.handleChange} />
                         {this.state.errorMessage && <span className="error">Password is required</span>}
-                        
+
                     </BoxTwo>
                     <BoxOne>
                         <input type="submit" value="Submit" />
                     </BoxOne>
                 </Form>
-                
+
             </Container>
 
         </>

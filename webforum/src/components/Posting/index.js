@@ -12,6 +12,7 @@ export default class Posting extends Component {
             comment: '',
             comments: props.comments,
             key: props.id,
+            username: props.username,
         };
         
         this.handleChange=this.handleChange.bind(this);
@@ -54,7 +55,7 @@ export default class Posting extends Component {
         
         return (
             <Container>
-                <User><b>Username</b></User>
+                <User><b>By: {this.state.username}</b></User>
                 <Title>
                     <h3>{this.state.title}</h3>
                    

@@ -12,6 +12,7 @@ export default class Dashboard extends Component {
     this.state = {
       apiResponse: "",
       category: "Homework",
+      
     };
     this.handleChange = this.handleChange.bind(this);
 
@@ -29,14 +30,14 @@ export default class Dashboard extends Component {
 
     const listed = postingList.map(posting => (
 
-      <Posting comments={posting.comments} title={posting.title} body={posting.body} id={posting.id} />
+      <Posting comments={posting.comments} title={posting.title} body={posting.body} username={posting.username} id={posting.id} />
     ));
 
     return (
       <>
-        <Navbar />
+        <Navbar loggedin={this.props.loggedin} name={this.props.username}/>
         <div>
-          <label>Select Category </label>
+          <label>Select Category{this.props.username}</label>
           <Dropdown name="category" id="category" onChange={this.handleChange}>
             <option value="Homework">Homework</option>
             <option value="Dorms">Dorms</option>

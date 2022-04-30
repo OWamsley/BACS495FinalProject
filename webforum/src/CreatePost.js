@@ -6,9 +6,9 @@ export class CreatePostPage extends Component {
     render() {
         return (
             <>
-                <Navbar />
+                <Navbar username={this.props.username} loggedin={this.props.loggedin} />
                 
-                <CreatePost />
+                <CreatePost username={this.props.username} loggedin={this.props.loggedin}/>
             </>
         )
     }

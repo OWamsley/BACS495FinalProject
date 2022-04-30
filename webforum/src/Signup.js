@@ -24,6 +24,14 @@ export default class Signup extends Component {
 
     handleSubmit = (event) => {
         //needs to actually do more later on 
+        fetch(process.env.REACT_APP_API_URL_USERS, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+            body: JSON.stringify({name: this.state.username})
+        })
+            .then(res => console.log(res));
         this.setState({ loggedOn: true })
     }
 
@@ -33,7 +41,7 @@ export default class Signup extends Component {
         }
         return (<>
             <Navbar />
-            <Container>
+            <Container username={this.state.username} loggedin={this.state.loggedin}>
                 <BoxOne><h2>Create an Account</h2></BoxOne>
                 
                 <Form onSubmit={this.handleSubmit}>
@@ -42,12 +50,7 @@ export default class Signup extends Component {
                         <Input id="username" type="text" name="username" onChange={this.handleChange} />
                         {this.state.errorMessage && <span className="error">Username is required</span>}
                     </BoxTwo>
-                    <BoxTwo>
-                        <Label >Password: </Label>
-                        <Input id="password" type="password" name="password" onChange={this.handleChange} />
-                        {this.state.errorMessage && <span className="error">Password is required</span>}
-                        
-                    </BoxTwo>
+                    
                     <BoxOne>
                         <input type="submit" value="Submit" />
                     </BoxOne>

@@ -23,7 +23,7 @@ export default class CreatePostElements extends Component {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({title: this.state.title, body: this.state.body, category: this.state.category}),
+          body: JSON.stringify({title: this.state.title, body: this.state.body, category: this.state.category, username: this.props.username}),
         })
           .then(function(res){console.log(res)})
           .catch(function(res){console.log(res)});
@@ -38,6 +38,7 @@ export default class CreatePostElements extends Component {
     }
 
     handleSubmit = (event) => {
+        event.preventDefault();
         this.callAPI();
     }
 
@@ -45,7 +46,7 @@ export default class CreatePostElements extends Component {
     render() {
         return (
             <Container>
-                <h1>Create a Post</h1>
+                <h1>Create a Post {this.props.username}</h1>
                     <Form onSubmit={this.handleSubmit}>
                         <label>Post Category</label>
                         <Dropdown name="category" id="category" onChange={this.handleChange}>

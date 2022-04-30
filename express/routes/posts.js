@@ -47,7 +47,7 @@ router.post('/', async function(req, res, next){
   
   await db.collection("postCount").updateOne({ counter: "postCount" }, { $inc: {count: 1}});
 
-  console.log(count.count);
+
   const post = {
     "title": req.body.title,
     "category": req.body.category,
@@ -55,7 +55,9 @@ router.post('/', async function(req, res, next){
     "comments":[],
     "id": count.count,
     "commentCount": 0,
+    "username": req.body.username
   }
+  console.log(post);
 
   db.collection("posts").insertOne(post);
   res.json();
