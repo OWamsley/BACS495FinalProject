@@ -1,4 +1,4 @@
-<h1>BACS495-Final-Project</h1>
+<h1>Questions Web APP - BACS495-Final-Project </h1>
 
 This project is a web application that allows user to post questions, answer them, and vote on answers. React and Node js were used for the frontend, while a custom
 Express JS API and Mongo DB was used for the backend. 
