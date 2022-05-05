@@ -5,3 +5,5 @@ Express JS API and Mongo DB was used for the backend.
 
 To run this project locally, run ```npm install``` in both the folder named webforum and the folder named express. Then run ```npm start``` in both folders. The 
 Express API runs on port 3000, and the web app runs on port 2000. 
+
+The connection to the MongoDB server is found in express/bin/www file at line 25.
