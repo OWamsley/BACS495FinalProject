@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Navigate } from 'react-router-dom';
 import { Container, Input, Body, Form, Dropdown } from './CreatePostElements';
 
 
@@ -10,6 +10,8 @@ export default class CreatePostElements extends Component {
             category: 'Homework',
             title: '',
             body: '',
+            switch: false,
+            posted: false,
         };
         this.handleChange=this.handleChange.bind(this);
         this.callAPI = this.callAPI.bind(this);
@@ -27,6 +29,11 @@ export default class CreatePostElements extends Component {
         })
           .then(function(res){console.log(res)})
           .catch(function(res){console.log(res)});
+          setTimeout(()=>{
+          this.setState({posted: true});
+          console.log("now");
+          }
+          , 1000);
       }
 
     handleChange = (event) => {
@@ -44,9 +51,15 @@ export default class CreatePostElements extends Component {
 
 
     render() {
+        if(this.props.loggedin == false){
+            return <Navigate to="/login" />
+        }
+        if(this.state.posted){
+            return <Navigate to="/" />
+        }
         return (
             <Container>
-                <h1>Create a Post {this.props.username}</h1>
+                <h1>Create a Post</h1>
                     <Form onSubmit={this.handleSubmit}>
                         <label>Post Category</label>
                         <Dropdown name="category" id="category" onChange={this.handleChange}>

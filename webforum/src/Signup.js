@@ -12,7 +12,9 @@ export default class Signup extends Component {
             username: '',
             password: '',
             loggedOn: false,
+            switch:false,
         };
+        this.handleres = this.handleres.bind(this);
     }
 
     handleChange = (event) => {
@@ -22,8 +24,16 @@ export default class Signup extends Component {
 
     }
 
+    switch = (event) => {
+        event.preventDefault();
+        this.setState({
+            switch: true
+        });
+    }
+
     handleSubmit = (event) => {
         //needs to actually do more later on 
+        event.preventDefault();
         fetch(process.env.REACT_APP_API_URL_USERS, {
             method: 'POST',
             headers: {
@@ -31,13 +41,24 @@ export default class Signup extends Component {
               },
             body: JSON.stringify({name: this.state.username})
         })
-            .then(res => console.log(res));
-        this.setState({ loggedOn: true })
+            .then(res => res.json())
+            .then(res => this.handleres(res));
+        
+    }
+
+    handleres(res){
+        
+        this.props.setId(res.id);
+        console.log("res " + res);
+        this.props.logInUser(this.state.username);
     }
 
     render() {
-        if (this.state.loggedOn) {
-            return <Navigate to="/" />
+        if (this.props.loggedin) {
+            return <Navigate to="/login/info" />
+        }
+        if(this.state.switch){
+            return <Navigate to="/login" />
         }
         return (<>
             <Navbar />
@@ -55,6 +76,13 @@ export default class Signup extends Component {
                         <input type="submit" value="Submit" />
                     </BoxOne>
                 </Form>
+
+                <Form onSubmit={this.switch}>
+                    <BoxOne>
+                        <input type="submit" value="Log in Instead" />
+                    </BoxOne>
+                </Form>
+
                 
             </Container>
 

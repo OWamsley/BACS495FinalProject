@@ -13,7 +13,8 @@ export default class Login extends Component {
             password: -1,
             loggedOn: false,
             apiResponse: '',
-            errorMessage: ''
+            errorMessage: '',
+            switch: false
         };
         this.processResult = this.processResult.bind(this);
     }
@@ -27,6 +28,13 @@ export default class Login extends Component {
 
     logInUser = (name) => {
         this.props.logInUser(name)
+    }
+
+    switch = (event) => {
+        event.preventDefault();
+        this.setState({
+            switch: true
+        });
     }
 
     handleSubmit = (event) => {
@@ -69,6 +77,9 @@ export default class Login extends Component {
         if (this.props.loggedin) {
             return <Navigate to="/" />
         }
+        if(this.state.switch){
+            return <Navigate to="/signup" />
+        }
         return (<>
             <Navbar username={this.state.username} loggedin={this.state.loggedin}/>
             <Container>
@@ -89,6 +100,11 @@ export default class Login extends Component {
                     </BoxTwo>
                     <BoxOne>
                         <input type="submit" value="Submit" />
+                    </BoxOne>
+                </Form>
+                <Form onSubmit={this.switch}>
+                    <BoxOne>
+                        <input type="submit" value="Sign up Instead" />
                     </BoxOne>
                 </Form>
 

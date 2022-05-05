@@ -18,7 +18,6 @@ router.get('/comments', async function(req, res, next) {
   var comments = post.comments;
   console.log("Retrieving Comments for key: "  + req.body.id);
   res.json(comments);
-  
 });
 
 router.patch('/', async function(req, res, next){
@@ -29,13 +28,24 @@ router.patch('/', async function(req, res, next){
   var db = req.app.locals.db;
   var comments = await db.collection("posts").findOne(query, { commentCount: 1, _id: 0});
   var comment = { "commentTitle": req.body.commentTitle, 
+  "username": req.body.username,
   "commentBody": req.body.commentBody,
   "id": comments.commentCount,
+  "voted": [],
   "likes" : 0,
   "dislikes": 0,};
   
   await db.collection("posts").updateOne(query, {$push: { comments: comment }})
   await db.collection("posts").updateOne(query, {$inc: { commentCount: 1 }})
+  
+  res.send();
+});
+
+router.put('/', async function(req, res, next){
+  //add like to a comment. add username if not 
+  var db = req.app.locals.db;
+  const query = { id: req.body.id, "comments.id": req.body.commentid }
+  await db.collection("posts").updateOne(query, {$inc: { "comments.$.likes": req.body.inc }})
   
   res.send();
 });

@@ -42,13 +42,14 @@ router.post('/', async function(req, res, next) {
   var db = req.app.locals.db;
   var count = await db.collection("postCount").findOne({ counter: "user" }, {count: 1, _id: 0});
   await db.collection("postCount").updateOne({ counter: "user" }, { $inc: {count: 1}});
+  var id = count.count;
   const user = {
-    'id': count.count ,
+    'id': id,
     'name': req.body.name
     }
   console.log(user);
   db.collection("users").insertOne(user);
-  res.json({"message": "user inserted"});
+  res.json({ id: id});
 
 });
 

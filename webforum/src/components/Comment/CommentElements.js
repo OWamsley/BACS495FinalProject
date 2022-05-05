@@ -21,12 +21,22 @@ export const Dislike = styled.button`
 
 `
 
+export const Name = styled.div`
+    display: flex;
+    flex-grow: 1;
+    margin-top: .25rem;
+
+    `
+
+
 export const CommentBody = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    justify-content: center;
+    justify-content: ;
     padding-left: .5rem;
+    flex-grow: 3;
+    
 `
 
 export const Karma = styled.div`

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Container, ButtonBox, Like, Dislike, CommentBody, Karma } from './CommentElements';
+import { Name, Container, ButtonBox, Like, Dislike, CommentBody, Karma } from './CommentElements';
 import upStandard from './resources/upStandard.png';
 import upSelected from './resources/upSelected.png';
 import downStandard from './resources/downStandard.png';
 import downSelected from './resources/downSelected.png';
+import { Navigate } from 'react-router-dom';
 
 export default class Comment extends Component {
     constructor(props){
@@ -18,11 +19,25 @@ export default class Comment extends Component {
             downArrow: downStandard,
             up: false,
             down: false,
+            switch: false, 
         }
+        this.callAPI = this.callAPI.bind(this);
     }
     handleUp(){
+        
+        if(this.props.loggedin == false){
+            this.setState({
+                switch: true
+            });
+            return;
+        }
         if(this.state.up){
-            this.setState({ up: false, upArrow: upStandard})
+            this.setState({ up: false, upArrow: upStandard});
+            this.callAPI(-1);
+            var up = this.state.likes;
+            this.setState({
+                likes: (up-1)
+            })
         }
         else{
             this.setState({
@@ -31,13 +46,44 @@ export default class Comment extends Component {
                 up: true,
                 upArrow: upSelected,
             });
+            this.callAPI(1);
+            var up = this.state.likes;
+            this.setState({
+                likes: (up+1)
+            })
             
         }
     }
 
+    callAPI(increment){
+        fetch(process.env.REACT_APP_API_URL_POSTS, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: this.props.postid,
+                inc: increment,
+                commentid: this.props.commentid,
+            })
+        })
+    }
+
     handleDown(){
+        console.log(this.props.loggedin);
+        if(this.props.loggedin == false){
+            this.setState({
+                switch: true
+            });
+            return;
+        }
         if(this.state.down){
             this.setState({ down: false, downArrow: downStandard})
+            this.callAPI(1);
+            var up = this.state.likes;
+            this.setState({
+                likes: (up+1)
+            })
         }
         else{
             this.setState({
@@ -46,10 +92,18 @@ export default class Comment extends Component {
                 down: true,
                 downArrow: downSelected,
             })
+            this.callAPI(-1);
+            var up = this.state.likes;
+            this.setState({
+                likes: (up-1)
+            })
         }
 
     }
     render() {
+        if(this.state.switch){
+            return <Navigate to="/login" />
+        }
         return (
             <Container>
                 <ButtonBox>
@@ -58,6 +112,7 @@ export default class Comment extends Component {
                     <Dislike> <img src={this.state.downArrow} alt="uparrow" onClick={this.handleDown} /> </Dislike>
                 </ButtonBox>
                 <CommentBody>
+                    <Name> <b>By {this.props.username} </b></Name>
                     <CommentBody>{this.state.body}</CommentBody>
                 </CommentBody>
             </Container>

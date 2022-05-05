@@ -29,7 +29,7 @@ class Navbar extends Component {
         return (<>
             <Nav>
                 <NavLink to="/">
-                    <h1>Logo</h1>
+                    <h1>College Questions</h1>
                 </NavLink>
                 <Bars />
                 <NavBtn>
